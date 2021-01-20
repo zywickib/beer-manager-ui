@@ -1,0 +1,11 @@
+{
+  "/api": {
+    "target": "http://university-beer-manager:8098",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    },
+    "changeOrigin": false,
+    "logLevel": "debug"
+  }
+}
