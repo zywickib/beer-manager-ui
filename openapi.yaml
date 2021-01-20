@@ -1,0 +1,411 @@
+---
+openapi: 3.0.3
+tags:
+- name: beer
+- name: brewery
+paths:
+  /untappd/crawl:
+    get:
+      parameters:
+      - name: clientId
+        in: query
+        schema:
+          type: string
+      - name: clientSecret
+        in: query
+        schema:
+          type: string
+      - name: username
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v1/beer:
+    get:
+      tags:
+      - beer
+      description: Get all beers
+      operationId: getAllBeers
+      responses:
+        "400":
+          description: Bad request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BeerResultDto'
+    post:
+      tags:
+      - beer
+      description: Add beer
+      operationId: addNewBeer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeerUpdateDto'
+      responses:
+        "400":
+          description: Bad request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeerResultDto'
+  /v1/beer/{guid}:
+    get:
+      tags:
+      - beer
+      description: Get beer by guid
+      operationId: getBeerByGuid
+      parameters:
+      - name: guid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "400":
+          description: Bad request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  abv:
+                    format: double
+                    type: number
+                  brewery:
+                    $ref: '#/components/schemas/BreweryDto'
+                  description:
+                    type: string
+                  ibu:
+                    format: int32
+                    type: integer
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  style:
+                    type: string
+    put:
+      tags:
+      - beer
+      description: Update Beer
+      operationId: updateBeerByGuid
+      parameters:
+      - name: guid
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeerUpdateDto'
+      responses:
+        "400":
+          description: Bad request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeerResultDto'
+    delete:
+      tags:
+      - beer
+      description: Delete beer
+      operationId: getBeerByGuid
+      parameters:
+      - name: guid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /v1/brewery:
+    get:
+      tags:
+      - brewery
+      description: Get all breweries
+      operationId: getAllBreweries
+      responses:
+        "400":
+          description: Bad request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BreweryResultDto'
+    post:
+      tags:
+      - brewery
+      description: Add new brewery
+      operationId: addNewBrewery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BreweryDto'
+      responses:
+        "400":
+          description: Bad request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BreweryResultDto'
+  /v1/brewery/{guid}:
+    get:
+      tags:
+      - brewery
+      description: Get brewery by guid
+      operationId: getBreweryByGuid
+      parameters:
+      - name: guid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "400":
+          description: Bad request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  logo:
+                    type: string
+                  name:
+                    type: string
+    put:
+      tags:
+      - brewery
+      description: update brewery
+      operationId: updateBreweryByGuid
+      parameters:
+      - name: guid
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BreweryDto'
+      responses:
+        "400":
+          description: Bad request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeerResultDto'
+    delete:
+      tags:
+      - brewery
+      description: Get brewery by guid
+      operationId: deleteBrewery
+      parameters:
+      - name: guid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+components:
+  schemas:
+    Brewery:
+      type: object
+      properties:
+        controlTraceabilityManual:
+          type: boolean
+        creationDate:
+          format: date-time
+          type: string
+        creationUser:
+          type: string
+        modificationDate:
+          format: date-time
+          type: string
+        modificationUser:
+          type: string
+        persisted:
+          type: boolean
+        principal:
+          type: object
+        version:
+          format: int32
+          type: integer
+        id:
+          type: string
+        beer:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Beer'
+        logo:
+          type: string
+        name:
+          type: string
+    Beer:
+      type: object
+      properties:
+        controlTraceabilityManual:
+          type: boolean
+        creationDate:
+          format: date-time
+          type: string
+        creationUser:
+          type: string
+        modificationDate:
+          format: date-time
+          type: string
+        modificationUser:
+          type: string
+        persisted:
+          type: boolean
+        principal:
+          type: object
+        version:
+          format: int32
+          type: integer
+        id:
+          type: string
+        abv:
+          format: double
+          type: number
+        brewery:
+          $ref: '#/components/schemas/Brewery'
+        description:
+          type: string
+        ibu:
+          format: int32
+          type: integer
+        name:
+          type: string
+        style:
+          type: string
+    BeerUpdateDto:
+      type: object
+      properties:
+        abv:
+          format: double
+          type: number
+        brewery:
+          $ref: '#/components/schemas/Brewery'
+        description:
+          type: string
+        ibu:
+          format: int32
+          type: integer
+        name:
+          pattern: \S
+          type: string
+          nullable: false
+        style:
+          type: string
+    BreweryDto:
+      type: object
+      properties:
+        logo:
+          type: string
+        name:
+          type: string
+    BeerResultDto:
+      type: object
+      properties:
+        abv:
+          format: double
+          type: number
+        brewery:
+          $ref: '#/components/schemas/BreweryDto'
+        description:
+          type: string
+        ibu:
+          format: int32
+          type: integer
+        id:
+          type: string
+        name:
+          type: string
+        style:
+          type: string
+    BreweryResultDto:
+      type: object
+      properties:
+        id:
+          type: string
+        logo:
+          type: string
+        name:
+          type: string
