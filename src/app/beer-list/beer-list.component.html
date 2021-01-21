@@ -1,23 +1,76 @@
-beers
-<p-table [value]="beers">
-  <ng-template pTemplate="header">
+<p-table
+  #table
+  [value]="beers"
+  [columns]="columns"
+  [styleClass]="'mt-0'"
+  [alwaysShowPaginator]="true"
+  [autoLayout]="true"
+  dataKey="id"
+  paginatorPosition="bottom"
+  [paginator]="true"
+  [rows]="10"
+  [reorderableColumns]="false"
+  [rowsPerPageOptions]="[10, 25, 50]"
+  [resizableColumns]="false"
+>
+  <ng-template pTemplate="header" let-columns>
     <tr>
-      <th>Name</th>
-      <th>Style</th>
-      <th>Brewery</th>
-      <th>IBU</th>
-      <th>Abv</th>
-      <th>Description</th>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        <span class="column-title">
+          {{ col.header }}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </span>
+      </th>
+    </tr>
+
+    <tr>
+      <th *ngFor="let col of columns">
+        <p-multiSelect
+          *ngIf="col.header === 'style' && col.isCustom"
+          [options]="style"
+          [(ngModel)]="selectedStyle"
+          (onChange)="onStyleChange($event)"
+          id="style"
+          defaultLabel="Choose"
+          appendTo="body"
+        >
+        </p-multiSelect>
+        <p-multiSelect
+          *ngIf="col.header === 'brewery' && col.isCustom"
+          [options]="brewery"
+          [(ngModel)]="selectedBrewery"
+          (onChange)="onBreweryChange($event)"
+          id="brewery"
+          defaultLabel="Choose"
+          appendTo="body"
+        >
+        </p-multiSelect>
+
+        <input
+          *ngIf="!col.isCustom"
+          class="column-filter-input"
+          (click)="$event.stopPropagation()"
+          pInputText
+          type="text"
+          (input)="
+            table.filter($event.target.value, col.field, col.filterMatchMode)
+          "
+          [value]="table.filters[col.field]?.value"
+        />
+      </th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-beer>
-    <tr>
-      <td>{{ beer.name }}</td>
-      <td>{{ beer.style }}</td>
-      <td>{{ beer.brewery.name }}</td>
-      <td>{{ beer.ibu }}</td>
-      <td>{{ beer.abv }}</td>
-      <td>{{ beer.description }}</td>
+
+  <ng-template pTemplate="body" let-beers let-columns="columns">
+    <tr [pSelectableRow]="beers">
+      <td *ngFor="let col of columns">
+        <div *ngIf="col.header === 'brewery'; else elseif1">
+          {{ beers[col.field].name }}
+        </div>
+        <ng-template #elseif1>
+          <div>{{ beers[col.field] }}</div>
+        </ng-template>
+      </td>
     </tr>
   </ng-template>
 </p-table>

@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { BeerService } from './api/beer-manager/v1/services';
 
 @NgModule({
@@ -20,6 +22,8 @@ import { BeerService } from './api/beer-manager/v1/services';
     TableModule,
     HttpClientModule,
     FormsModule,
+    ButtonModule,
+    MultiSelectModule,
   ],
   providers: [BeerService],
   bootstrap: [AppComponent],
