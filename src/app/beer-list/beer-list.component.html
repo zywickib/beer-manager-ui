@@ -1,0 +1,23 @@
+beers
+<p-table [value]="beers">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Name</th>
+      <th>Style</th>
+      <th>Brewery</th>
+      <th>IBU</th>
+      <th>Abv</th>
+      <th>Description</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-beer>
+    <tr>
+      <td>{{ beer.name }}</td>
+      <td>{{ beer.style }}</td>
+      <td>{{ beer.brewery.name }}</td>
+      <td>{{ beer.ibu }}</td>
+      <td>{{ beer.abv }}</td>
+      <td>{{ beer.description }}</td>
+    </tr>
+  </ng-template>
+</p-table>
