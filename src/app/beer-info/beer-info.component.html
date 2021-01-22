@@ -1,0 +1,44 @@
+<p-toolbar>
+  <div class="p-toolbar-group-left">
+    <p-button
+      label="Back to beer list"
+      icon="pi pi-directions-alt"
+      iconPos="left"
+      (click)="backToList()"
+    ></p-button>
+    <p-button label="Edit beer" icon="pi pi-pencil" iconPos="left"></p-button>
+  </div>
+
+  <div class="p-toolbar-group-right"></div>
+</p-toolbar>
+
+<div class="p-grid">
+  <div class="p-col-12 p-grid first-line">
+    <div class="p-col-3">
+      <div class="box">Name: {{ beer.name }}</div>
+    </div>
+    <div class="p-col-3">
+      <div class="box">Style: {{ beer.style }}</div>
+    </div>
+    <div class="p-col-3">
+      <div class="box">Abv: {{ beer.abv }} %</div>
+    </div>
+    <div class="p-col-3">
+      <div class="box">
+        <span pTooltip="International Bitternes Unit"> IBU: </span>
+        {{ beer.ibu }}
+      </div>
+    </div>
+  </div>
+  <div class="p-col-4">
+    <div class="box">
+      <div class="p-col">{{ beer.brewery.name }}</div>
+      <div class="p-col"><img src="{{ beer.brewery.logo }}" /></div>
+    </div>
+  </div>
+  <div class="p-col-8">
+    <div class="box">
+      {{ beer.description }}
+    </div>
+  </div>
+</div>

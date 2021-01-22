@@ -8,13 +8,14 @@
   dataKey="id"
   paginatorPosition="bottom"
   [paginator]="true"
-  [rows]="10"
+  [rows]="25"
   [reorderableColumns]="false"
-  [rowsPerPageOptions]="[10, 25, 50]"
+  [rowsPerPageOptions]="[25, 50, 100]"
   [resizableColumns]="false"
 >
   <ng-template pTemplate="header" let-columns>
     <tr>
+      <th>Actions</th>
       <th *ngFor="let col of columns" [pSortableColumn]="col.field">
         <span class="column-title">
           {{ col.header }}
@@ -24,6 +25,7 @@
     </tr>
 
     <tr>
+      <th></th>
       <th *ngFor="let col of columns">
         <p-multiSelect
           *ngIf="col.header === 'style' && col.isCustom"
@@ -63,9 +65,44 @@
 
   <ng-template pTemplate="body" let-beers let-columns="columns">
     <tr [pSelectableRow]="beers">
+      <td>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-info-circle"
+          (click)="beerInfo(beers)"
+          class="p-button-rounded p-button-text"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-pencil"
+          (click)="editBeer(beers)"
+          class="p-button-rounded p-button-text"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-trash"
+          (click)="deleteBeer(beers)"
+          class="p-button-rounded p-button-text"
+        ></button>
+      </td>
       <td *ngFor="let col of columns">
         <div *ngIf="col.header === 'brewery'; else elseif1">
-          {{ beers[col.field].name }}
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-question-circle"
+            (click)="breweryInfo(beer)"
+            class="p-button-rounded p-button-text"
+            label="{{ beers[col.field].name }}"
+            iconPos="right"
+          ></button>
         </div>
         <ng-template #elseif1>
           <div>{{ beers[col.field] }}</div>

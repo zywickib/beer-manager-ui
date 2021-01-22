@@ -4,6 +4,7 @@ import { BeerResultDto } from '../api/beer-manager/v1/models/beer-result-dto';
 import { BreweryDto } from '../api/beer-manager/v1/models/brewery-dto';
 import { SelectItem } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-beer-list',
@@ -13,7 +14,8 @@ import { Table } from 'primeng/table';
 export class BeerListComponent implements OnInit {
   constructor(
     private readonly beerService: BeerService,
-    private readonly breweryService: BreweryService
+    private readonly breweryService: BreweryService,
+    private router: Router
   ) {
     this.columns = [
       { field: 'name', header: 'name' },
@@ -40,30 +42,29 @@ export class BeerListComponent implements OnInit {
   public selectedBrewery: any[] = [];
 
   public deleteBeer(beer: BeerResultDto) {
-    console.log('deleteBeer');
-    console.log(beer);
+    this.beerService.deleteBeerByGuid({ guid: beer.id }).subscribe(() => {
+      this.beers = this.beers.filter((obj) => obj !== beer);
+    });
   }
 
   public beerInfo(beer: BeerResultDto) {
-    console.log('beerInfo');
-    console.log(beer);
+    this.router.navigate(['/beers/info', beer.id]);
   }
 
   public breweryInfo(brewery: BreweryDto) {
-    console.log('beerInfo');
+    console.log('breweryInfo');
     console.log(brewery);
   }
 
   public editBeer(beer: BeerResultDto) {
-    console.log('editBeer');
-    console.log(beer);
+    console.log('edit!!!');
+    this.router.navigate(['/beers/edit', beer.id]);
   }
 
   ngOnInit(): void {
     this.beerService.getAllBeers().subscribe((response) => {
       this.beers = response;
       this.beers.forEach((beer) => {
-        console.log(beer);
         if (
           this.uniqueStyles.indexOf(beer.style) === -1 &&
           beer.style !== null
@@ -92,8 +93,6 @@ export class BeerListComponent implements OnInit {
   }
 
   public onBreweryChange(event) {
-    console.log(event);
-    console.log(this.table);
     this.table.filter(event.value, 'brewery', 'in');
   }
 

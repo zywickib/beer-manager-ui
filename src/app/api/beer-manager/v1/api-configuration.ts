@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiConfiguration {
-  rootUrl: string = 'http://university-beer-manager:8098';
+  rootUrl: string = '';
 }
 
 /**
