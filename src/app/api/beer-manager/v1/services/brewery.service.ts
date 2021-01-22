@@ -9,7 +9,6 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
-import { BeerResultDto } from '../models/beer-result-dto';
 import { BreweryDto } from '../models/brewery-dto';
 import { BreweryResultDto } from '../models/brewery-result-dto';
 
@@ -187,7 +186,7 @@ export class BreweryService extends BaseService {
   updateBreweryByGuid$Response(params: {
     guid: string;
     body?: BreweryDto
-  }): Observable<StrictHttpResponse<BeerResultDto>> {
+  }): Observable<StrictHttpResponse<BreweryResultDto>> {
 
     const rb = new RequestBuilder(this.rootUrl, BreweryService.UpdateBreweryByGuidPath, 'put');
     if (params) {
@@ -201,7 +200,7 @@ export class BreweryService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<BeerResultDto>;
+        return r as StrictHttpResponse<BreweryResultDto>;
       })
     );
   }
@@ -217,10 +216,10 @@ export class BreweryService extends BaseService {
   updateBreweryByGuid(params: {
     guid: string;
     body?: BreweryDto
-  }): Observable<BeerResultDto> {
+  }): Observable<BreweryResultDto> {
 
     return this.updateBreweryByGuid$Response(params).pipe(
-      map((r: StrictHttpResponse<BeerResultDto>) => r.body as BeerResultDto)
+      map((r: StrictHttpResponse<BreweryResultDto>) => r.body as BreweryResultDto)
     );
   }
 

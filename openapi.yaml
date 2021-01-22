@@ -141,7 +141,7 @@ paths:
       tags:
       - beer
       description: Delete beer
-      operationId: getBeerByGuid
+      operationId: deleteBeerByGuid
       parameters:
       - name: guid
         in: path
@@ -261,7 +261,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BeerResultDto'
+                $ref: '#/components/schemas/BreweryResultDto'
     delete:
       tags:
       - brewery
@@ -377,6 +377,8 @@ components:
     BreweryDto:
       type: object
       properties:
+        id:
+          type: string
         logo:
           type: string
         name:

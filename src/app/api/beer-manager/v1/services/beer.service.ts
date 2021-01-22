@@ -225,23 +225,23 @@ export class BeerService extends BaseService {
   }
 
   /**
-   * Path part for operation getBeerByGuid_1
+   * Path part for operation deleteBeerByGuid
    */
-  static readonly GetBeerByGuid_1Path = '/v1/beer/{guid}';
+  static readonly DeleteBeerByGuidPath = '/v1/beer/{guid}';
 
   /**
    * Delete beer
    *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `getBeerByGuid_1()` instead.
+   * To access only the response body, use `deleteBeerByGuid()` instead.
    *
    * This method doesn't expect any request body.
    */
-  getBeerByGuid_1$Response(params: {
+  deleteBeerByGuid$Response(params: {
     guid: string;
   }): Observable<StrictHttpResponse<void>> {
 
-    const rb = new RequestBuilder(this.rootUrl, BeerService.GetBeerByGuid_1Path, 'delete');
+    const rb = new RequestBuilder(this.rootUrl, BeerService.DeleteBeerByGuidPath, 'delete');
     if (params) {
       rb.path('guid', params.guid, {});
     }
@@ -261,15 +261,15 @@ export class BeerService extends BaseService {
    * Delete beer
    *
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `getBeerByGuid_1$Response()` instead.
+   * To access the full response (for headers, for example), `deleteBeerByGuid$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  getBeerByGuid_1(params: {
+  deleteBeerByGuid(params: {
     guid: string;
   }): Observable<void> {
 
-    return this.getBeerByGuid_1$Response(params).pipe(
+    return this.deleteBeerByGuid$Response(params).pipe(
       map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
