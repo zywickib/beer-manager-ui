@@ -1,3 +1,22 @@
+<p-toolbar>
+  <div class="p-toolbar-group-left">
+    <p-button
+      label="Add new beer"
+      icon="pi pi-plus"
+      iconPos="left"
+      (click)="addNewBeer()"
+    ></p-button>
+    <p-button
+      label="Reset table"
+      icon="pi pi-exclamation-circle"
+      iconPos="left"
+      (click)="resetTable(table)"
+    ></p-button>
+  </div>
+
+  <div class="p-toolbar-group-right"></div>
+</p-toolbar>
+
 <p-table
   #table
   [value]="beers"

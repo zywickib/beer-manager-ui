@@ -21,6 +21,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DialogModule } from 'primeng/dialog';
+import { BeerAddComponent } from './beer-add/beer-add.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     BeerListComponent,
     BeerInfoComponent,
     BeerEditComponent,
+    BeerAddComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     InputTextareaModule,
     FormsModule,
     ReactiveFormsModule,
+    DialogModule,
   ],
   providers: [BeerService],
   bootstrap: [AppComponent],

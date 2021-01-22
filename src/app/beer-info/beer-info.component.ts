@@ -29,4 +29,8 @@ export class BeerInfoComponent implements OnInit {
   public backToList() {
     this.router.navigate(['/beers']);
   }
+
+  public editBeer() {
+    this.router.navigate(['/beers/edit', this.beer.id]);
+  }
 }

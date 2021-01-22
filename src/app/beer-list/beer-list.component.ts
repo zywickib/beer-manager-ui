@@ -53,16 +53,19 @@ export class BeerListComponent implements OnInit {
     this.router.navigate(['/beers/info', beer.id]);
   }
 
-  public breweryInfo(brewery: BreweryDto) {
-    console.log('breweryInfo');
-    console.log(brewery);
-  }
-
   public editBeer(beer: BeerResultDto) {
-    console.log('edit!!!');
     this.router.navigate(['/beers/edit', beer.id]);
   }
 
+  public addNewBeer() {
+    this.router.navigate(['/beers/add']);
+  }
+
+  public resetTable(table: Table) {
+    table.reset();
+    this.selectedBrewery = [];
+    this.selectedStyle = [];
+  }
   ngOnInit(): void {
     this.beerService.getAllBeers().subscribe((response) => {
       this.beers = response;
