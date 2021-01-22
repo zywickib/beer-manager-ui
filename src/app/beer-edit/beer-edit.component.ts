@@ -4,7 +4,7 @@ import { BreweryService, BeerService } from '../api/beer-manager/v1/services';
 import { SelectItem } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BeerResultDto } from '../api/beer-manager/v1/models/beer-result-dto';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-beer-edit',
@@ -22,11 +22,25 @@ export class BeerEditComponent implements OnInit {
     private router: Router
   ) {
     this.beerGroup = this.fb.group({
-      abv: null,
-      brewery: null,
+      abv: [
+        '',
+        [
+          Validators.min(0),
+          Validators.max(100),
+          Validators.pattern('^(([0-9]*)|(([0-9]*).([0-9]*)))$'),
+        ],
+      ],
+      brewery: ['', [Validators.required]],
       description: null,
-      ibu: null,
-      name: null,
+      ibu: [
+        '',
+        [
+          Validators.min(0),
+          Validators.max(1000),
+          Validators.pattern('^[0-9]*$'),
+        ],
+      ],
+      name: ['', [Validators.required]],
       style: null,
     });
   }
@@ -79,8 +93,8 @@ export class BeerEditComponent implements OnInit {
       })
       .subscribe(
         (response) => {
-          console.log(response);
           this.beer = response;
+          this.router.navigate(['/beers/info', this.beer.id]);
         },
         (error) => {
           console.log(error);
