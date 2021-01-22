@@ -41,6 +41,8 @@ export class BeerListComponent implements OnInit {
   public selectedStyle: any[] = [];
   public selectedBrewery: any[] = [];
 
+  public displayPhoto: boolean = false;
+
   public deleteBeer(beer: BeerResultDto) {
     this.beerService.deleteBeerByGuid({ guid: beer.id }).subscribe(() => {
       this.beers = this.beers.filter((obj) => obj !== beer);
@@ -94,6 +96,10 @@ export class BeerListComponent implements OnInit {
 
   public onBreweryChange(event) {
     this.table.filter(event.value, 'brewery', 'in');
+  }
+
+  public showPhotoDialog() {
+    this.displayPhoto = true;
   }
 
   private loadStyleLabels(): void {

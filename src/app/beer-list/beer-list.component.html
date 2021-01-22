@@ -93,16 +93,10 @@
       </td>
       <td *ngFor="let col of columns">
         <div *ngIf="col.header === 'brewery'; else elseif1">
-          <button
-            pButton
-            pRipple
-            type="button"
-            icon="pi pi-question-circle"
-            (click)="breweryInfo(beer)"
-            class="p-button-rounded p-button-text"
-            label="{{ beers[col.field].name }}"
-            iconPos="right"
-          ></button>
+          <div style="text-align: center">
+            <img src="{{ beers[col.field].logo }}" />
+            {{ beers[col.field].name }}
+          </div>
         </div>
         <ng-template #elseif1>
           <div>{{ beers[col.field] }}</div>
